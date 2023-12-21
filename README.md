@@ -1,59 +1,121 @@
+# Event Microservice
 
-# Eventos microservice
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
+[![Licence](https://img.shields.io/github/license/Ileriayo/markdown-badges?style=for-the-badge)](./LICENSE)
 
-**Se trata de um microserviço para criação de eventos públicos ou virtuais, com envio de email de confirmação ao se registrar no evento.**
+This project is an API built using **Java, Java Spring, H2 as the database.**
 
-# 📁 Acesso ao projeto
+The API was developed to demonstrate how to create and integrate microservices using Java Spring.
 
-**Para baixar o projeto clique <a href="https://github.com/gabriel-afg/EventMicroservice/archive/refs/heads/main.zip">aqui</a>.**
+## Table of Contents
 
-# 🛠️ Guia
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Usage](#usage)
+- [API Endpoints](#api-endpoints)
+- [Database](#database)
+- [Contributing](#contributing)
 
-**1. Para testar na sua máquina é preciso baixar o microserviço de envio de email clicando <a href="https://github.com/gabriel-afg/EmailMicroservice/archive/refs/heads/main.zip">aqui</a>.**
+## Installation
 
-**2. Após o download, extraia a pasta e coloque na IDE que preferir. E execute ambos os projetos**
+1. Clone the repository:
 
-# Tecnologias utilizadas
-
-- `Java`
-- `SpringBoot`
-- `Spring Cloud OpenFeign`
-
-## Documentação da API
-
-#### Buscar eventos
-
-```http
-  GET /events
+```bash
+git clone https://github.com/gabriel-afg/EventMicroservice-java.git
 ```
 
+2. Install dependencies with Maven
 
-#### Buscar eventos que estão por vir
+3. Clone the [Email Microservice](https://github.com/Fernanda-Kipper/desafio-backend-uber) repository and follow his installation process
 
-```http
-  GET /events/upcoming
+```bash
+git clone https://github.com/gabriel-afg/EmailMicroservice.git
 ```
 
-### Criar evento
+4. Adjust Email Microservice application.properties to run on port `8081`
 
-```http
-  POST /events
+```yaml
+server.port=8081
 ```
 
-| Parâmetro   | Tipo       |
-| :---------- | :--------- | 
-| `maxParticipants`      | `int` | 
-| `registeredPaticipants`      | `int` |  
-| `date`      | `String` | 
-| `title`      | `String` | 
-| `description`      | `String` | 
+5. Run both Microservices
 
-### Registrar no evento
+## Usage
 
-```http
-  POST /{eventId}/register
+1. Start the application with Maven
+2. The API will be accessible at http://localhost:8080
+
+## API Endpoints
+The API provides the following endpoints:
+
+**GET EVENTS**
+```markdown
+GET /events - Retrieve a list of all events.
+```
+```json
+[
+  {
+    "id": "ae413540-515d-4add-8cd1-1702c7d280d7",
+    "maxParticipants": 20,
+    "registeredParticipants": 0,
+    "date": "28/11/2023",
+    "title": "Frontin Floripa",
+    "description": "Evento Tech em Floripa!!"
+  }
+]
 ```
 
-| Parâmetro   | Tipo       |
-| :---------- | :--------- | 
-| `participantEmail`| `String` | 
+**GET UPCOMING EVENTS**
+```markdown
+GET /events/upcoming - List all upcoming events (which the date is greather then current date).
+```
+
+```json
+[
+  {
+    "id": "ae413540-515d-4add-8cd1-1702c7d280d7",
+    "maxParticipants": 20,
+    "registeredParticipants": 0,
+    "date": "28/11/2023",
+    "title": "Frontin Floripa",
+    "description": "Evento Tech em Floripa!!"
+  }
+]
+```
+
+**POST EVENT**
+```markdown
+POST /events - Register a new event into the App
+```
+```json
+{
+	"maxParticipants": 20,
+	"registeredParticipants": 0,
+	"date": "28/11/2023",
+	"title": "Frontin Floripa",
+	"description": "Evento Tech em Floripa!!"
+}
+```
+
+**POST REGISTRATION**
+```markdown
+POST /events/${id} - Register a user into a Event if event is not full
+```
+
+```json
+{
+  "participantEmail": "liveskipperdev@gmail.com"
+}
+```
+
+## Database
+The project utilizes [H2 Database](https://www.h2database.com/html/tutorial.html) as the database.
+
+## Contributing
+
+Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request to the repository.
+
+
+
+
